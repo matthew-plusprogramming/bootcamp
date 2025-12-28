@@ -1,0 +1,45 @@
+import '@dotenvx/dotenvx/config';
+
+import cors from 'cors';
+import express from 'express';
+import { prettifyError, ZodError } from 'zod';
+
+import { getUserRequestHandler } from '@/handlers/getUser.handler';
+import { heartbeatRequestHandler } from '@/handlers/heartbeat.handler';
+import { loginRequestHandler } from '@/handlers/login.handler';
+import { registerRequestHandler } from '@/handlers/register.handler';
+import { ipRateLimitingMiddlewareRequestHandler } from '@/middleware/ipRateLimiting.middleware';
+import { isAuthenticatedMiddlewareRequestHandler } from '@/middleware/isAuthenticated.middleware';
+import { jsonErrorMiddleware } from '@/middleware/jsonError.middleware';
+import { EnvironmentSchema } from '@/types/environment';
+
+try {
+  EnvironmentSchema.parse(process.env);
+} catch (error) {
+  if (error instanceof ZodError) {
+    console.error('Environment variables validation failed');
+    console.error(prettifyError(error));
+    process.exit(1);
+  } else {
+    throw error;
+  }
+}
+
+const app = express();
+app.use(cors());
+app.use(ipRateLimitingMiddlewareRequestHandler);
+app.use(express.json());
+app.use(jsonErrorMiddleware);
+
+app.get(
+  '/heartbeat',
+  isAuthenticatedMiddlewareRequestHandler,
+  heartbeatRequestHandler,
+);
+app.post('/register', registerRequestHandler);
+app.post('/login', loginRequestHandler);
+app.get('/user/:identifier', getUserRequestHandler);
+
+app.listen(process.env.PORT);
+
+export { app };

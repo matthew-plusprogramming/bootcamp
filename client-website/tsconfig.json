@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    // Base
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2024",
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    // Monorepo
+    "incremental": true,
+    "tsBuildInfoFile": "node_modules/.cache/tsconfig.build.tsbuildinfo",
+
+    // Strictness
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    // If not transpiling
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "noEmit": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "useDefineForClassFields": true,
+
+    /* Bundler mode */
+    "allowImportingTsExtensions": true,
+    "jsx": "react-jsx",
+
+    /* Target */
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "erasableSyntaxOnly": true,
+
+    /* Helps when generating CSS module .d.ts into a parallel tree */
+    "rootDirs": ["src", "__generated__/src"],
+
+    /* Next plugin */
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "dist"]
+}

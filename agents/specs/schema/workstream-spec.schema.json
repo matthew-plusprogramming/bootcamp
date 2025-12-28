@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WorkstreamSpec Front Matter",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "owner",
+    "scope",
+    "dependencies",
+    "contracts",
+    "status",
+    "implementation_status"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "owner": { "type": "string" },
+    "scope": { "type": "string" },
+    "dependencies": { "type": "array", "items": { "type": "string" } },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "approved"]
+    },
+    "implementation_status": {
+      "type": "string",
+      "enum": ["not_started", "in_progress", "complete"]
+    }
+  },
+  "additionalProperties": false
+}
