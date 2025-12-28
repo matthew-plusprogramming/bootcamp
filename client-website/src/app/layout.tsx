@@ -1,33 +1,36 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import type { JSX } from 'react';
-
-import { ReactQueryProvider } from '@/providers/QueryClientProvider';
+import { Fraunces, Space_Grotesk } from 'next/font/google';
+import type { JSX, ReactNode } from 'react';
 
 import './globals.scss';
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-sans',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  display: 'swap',
+  variable: '--font-serif',
 });
 
 export const metadata: Metadata = {
-  title: 'Client App',
-  description: 'Our client website.',
+  title: 'Veggie Rescue Bootcamp',
+  description: 'Beginner-friendly Git and full-stack practice tasks.',
 };
 
 const RootLayout = ({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>): JSX.Element => {
   return (
-    <html lang="en" className={inter.variable}>
-      <body>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
-      </body>
+    <html lang="en" className={`${spaceGrotesk.variable} ${fraunces.variable}`}>
+      <body>{children}</body>
     </html>
   );
 };

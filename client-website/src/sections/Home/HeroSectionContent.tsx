@@ -1,27 +1,31 @@
-import { Button } from '@ui/components';
 import type { JSX } from 'react';
 
 import styles from './HeroSectionContent.module.scss';
 
 const HeroSectionContent = (): JSX.Element => {
   return (
-    <div className={styles.main}>
-      <p>Customizable at the Speed of Thought</p>
-      <h1>Scaffolding your ideas</h1>
-      <p>
-        With a standard suite of tools and components to build your next big
-        idea, the monorepo lets you focus on what matters most: building
-        something amazing. What are you waiting for?
+    <div className={styles.hero}>
+      <p className={styles.kicker}>Veggie Rescue Bootcamp</p>
+      <h1>Small tasks. Clear wins. Real momentum.</h1>
+      <p className={styles.lede}>
+        This repo is built for beginner devs who want focused practice. Each
+        task is short, explicit, and safe to experiment with.
       </p>
 
-      <Button
-        className={styles.heroCtaButton}
-        displayStyle="cta"
-        clickStyle="3d"
-        href="/signup"
-      >
-        Get started now
-      </Button>
+      <div className={styles.actions}>
+        <a className={styles.primaryAction} href="#start">
+          Pick a task
+        </a>
+        <a className={styles.secondaryAction} href="#api">
+          See the API data
+        </a>
+      </div>
+
+      <div className={styles.badges}>
+        <span>React + Next</span>
+        <span>Express API</span>
+        <span>In-memory data</span>
+      </div>
     </div>
   );
 };

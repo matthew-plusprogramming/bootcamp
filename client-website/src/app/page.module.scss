@@ -1,21 +1,236 @@
-@use '@/app/globals.scss' as *;
-
-.heroBackground {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100dvh;
-
-  @include fancy-gradient-background;
-  @include standard-page-padding;
+.page {
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, #ffe9d6 0%, transparent 45%),
+    radial-gradient(circle at 85% 0%, #dff0e3 0%, transparent 40%),
+    linear-gradient(180deg, #f6f1e7 0%, #fff6ec 45%, #f3ece0 100%);
 }
 
-.heroSection {
+.page::before {
+  content: '';
+  position: absolute;
+  inset: -20% 0 auto 0;
+  height: 60%;
+  background: repeating-linear-gradient(
+    -20deg,
+    rgb(31 27 22 / 0.04) 0,
+    rgb(31 27 22 / 0.04) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+  pointer-events: none;
+}
+
+.header,
+.main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 4rem) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.logoMark {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--bg-muted);
+}
+
+.nav a {
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: var(--bg-ink);
+}
+
+.navCta {
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #1f1b16;
+  font-weight: 600;
+  box-shadow: 0 12px 24px -16px rgb(214 83 27 / 0.6);
+}
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem)
+    clamp(3rem, 6vw, 6rem);
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 4vw, 3rem);
-  align-items: center;
-  justify-content: flex-start;
+  gap: clamp(3rem, 6vw, 6rem);
+}
 
-  color: var(--text-color);
-  text-align: center;
+.hero {
+  padding-top: clamp(2rem, 6vw, 5rem);
+  animation: riseIn 0.6s ease both;
+}
+
+.sectionHeading {
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sectionHeading h2 {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  margin: 0;
+}
+
+.sectionHeading p {
+  margin: 0;
+  color: var(--bg-muted);
+}
+
+.practice {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.practiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.practiceCard {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-line);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-elevated);
+  animation: riseIn 0.6s ease both;
+}
+
+.practiceCard:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.practiceCard:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.practiceCard h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.practiceCard p {
+  margin: 0;
+  color: var(--bg-muted);
+}
+
+.api {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--bg-line);
+  box-shadow: var(--shadow-elevated);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.start {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.steps li {
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--bg-line);
+  padding: 1rem 1.3rem;
+  box-shadow: 0 12px 28px -20px rgb(24 20 16 / 0.35);
+  animation: riseIn 0.6s ease both;
+}
+
+.steps strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--sea);
+}
+
+.steps li:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.steps li:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 4rem) clamp(2rem, 4vw, 3rem);
+  color: var(--bg-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+@media (max-width: 760px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.8rem 1.2rem;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

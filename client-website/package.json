@@ -21,18 +21,11 @@
     "// -- 🔧 Miscellaneous": "--"
   },
   "dependencies": {
-    "@ui/components": "*",
-    "@tanstack/react-query": "^5.90.14",
-    "framer-motion": "^12.23.26",
     "next": "^16.1.1",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-hook-form": "^7.69.0",
-    "zustand": "^5.0.9"
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@configs/eslint-config": "*",
-    "@configs/ts-config": "*",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
@@ -40,8 +33,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.23",
-    "babel-plugin-react-compiler": "1.0.0",
-    "classnames": "^2.5.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.1",
     "eslint-plugin-react-hooks": "^7.0.1",

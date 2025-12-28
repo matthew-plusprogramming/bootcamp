@@ -16,7 +16,8 @@ last_reviewed: 2025-12-28
 
 - Frontend: Vitest + Testing Library (`@testing-library/react`,
   `@testing-library/user-event`).
-- Backend: Vitest; use Supertest for Express route coverage.
+- Backend: no test harness by default; add Vitest + Supertest if a task
+  requires backend coverage.
 - Test setup: `client-website/src/test/setup.ts`.
 
 ## Boundaries & Mocks
@@ -27,10 +28,8 @@ last_reviewed: 2025-12-28
 
 ## Backend Test Patterns
 
-- Use existing helpers in `node-server/src/__tests__/` (builders, fakes, stubs).
-- Keep Arrange/Act/Assert comments for handler tests to match existing style.
+- No backend test helpers yet; keep tests minimal and focused if you add them.
 
 ## Suggested Commands
 
 - Frontend: `npm run test` (from `client-website`).
-- Backend: `npm run test` (from `node-server`).
