@@ -37,6 +37,9 @@ const Home = (): JSX.Element => {
               updates.
             </li>
           </ol>
+          <a className={styles.taskAction} href="#tASks">
+            Jump to task board
+          </a>
         </section>
 
         <section className={styles.tasks} id="tasks">
@@ -60,8 +63,7 @@ const Home = (): JSX.Element => {
                 <article
                   className={styles.taskSection}
                   id={task.id}
-                  key={task.id}
-                >
+                  key={task.id}>
                   <input
                     className={styles.taskToggle}
                     type="checkbox"
@@ -82,8 +84,7 @@ const Home = (): JSX.Element => {
                                 ? styles.taskBadge
                                 : styles.taskBadgeAlt
                             }
-                            key={`${task.id}-${badge}`}
-                          >
+                            key={`${task.id}-${badge}`}>
                             {badge}
                           </span>
                         ))}
@@ -92,8 +93,7 @@ const Home = (): JSX.Element => {
                     </div>
                     <label
                       className={styles.taskComplete}
-                      htmlFor={`${task.id}-complete`}
-                    >
+                      htmlFor={`${task.id}-complete`}>
                       <span className={styles.taskCompleteLabel}>
                         {completeLabel}
                       </span>

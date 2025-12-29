@@ -19,17 +19,13 @@ export const bootcampTasks: BootcampTask[] = [
   {
     id: 'task-1',
     order: 1,
-    title: 'Fix the broken "View next task" button',
+    title: 'Fix the broken "Jump to task board" button',
     badges: ['Bugfix', 'Start here'],
-    goal: 'Make the button below scroll to Task 2.',
-    expected: 'Clicking it jumps to the Task 2 section.',
+    goal: 'Make the "Jump to task board" button in Start the loop scroll to the Task board section.',
+    expected: 'Clicking it jumps to the Task board section.',
     lookIn: ['client-website/src/app/page.tsx'],
     completion: 'manual',
-    action: {
-      label: 'View next task',
-      href: '#task2',
-    },
-    hint: 'Hint: In `page.tsx` around lines 68-71 the card id is `task.id` (ex: `task-2`), but in `bootcampTasks.ts` the `href` for task 1 is `#task2`.',
+    hint: 'Hint: In `page.tsx` inside the Start the loop section, the button points to `#tASks`, but the Task board section uses the id `tasks`.',
   },
   {
     id: 'task-2',
@@ -37,7 +33,8 @@ export const bootcampTasks: BootcampTask[] = [
     title: 'Extract a TaskCard component',
     badges: ['Components'],
     goal: 'Move each task section into a reusable component with props, and add a "Next task" button to every card.',
-    expected: 'The task board looks the same, the markup lives in one component, and every card includes a Next task button.',
+    expected:
+      'The task board looks the same, the markup lives in one component, and every card includes a Next task button.',
     lookIn: [
       'client-website/src/app/page.tsx',
       'client-website/src/app/components/TaskCard.tsx',
@@ -63,13 +60,13 @@ export const bootcampTasks: BootcampTask[] = [
   {
     id: 'task-4',
     order: 4,
-    title: 'Render tasks from a local array',
-    badges: ['Data flow'],
-    goal: 'Move the task data into an array and map over it.',
-    expected: 'Sections render from data with stable keys.',
+    title: 'Show the total task count',
+    badges: ['Data flow', 'UI'],
+    goal: 'Display how many tasks are in the list under the Task board heading.',
+    expected: 'The task count updates automatically when the array changes.',
     lookIn: ['client-website/src/app/page.tsx'],
     completion: 'manual',
-    hint: 'Hint: The `bootcampTasks.map` loop is in `page.tsx` lines 59-137; if you are starting from static sections, replace them with a map and keep `task.id` as the key.',
+    hint: 'Hint: In `page.tsx` inside the Task board `sectionHeading`, render something like `${bootcampTasks.length} tasks` beneath the title.',
   },
   {
     id: 'task-5',
