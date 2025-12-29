@@ -38,15 +38,40 @@ const seedTips: MentorTip[] = [
     tags: ['mindset', 'consistency'],
     author: 'Leila Stone',
   },
+  {
+    id: 'tip-623',
+    headline: 'Timebox the rabbit hole',
+    summary:
+      'Set a timer when debugging to avoid endless detours before asking for help.',
+    topic: 'workflow',
+    readMinutes: 3,
+    tags: ['debugging', 'habits'],
+    author: 'Priya Nair',
+  },
+  {
+    id: 'tip-708',
+    headline: 'Write notes to future you',
+    summary: 'Leave short comments only when intent is not obvious.',
+    topic: 'craft',
+    readMinutes: 5,
+    tags: ['comments', 'maintenance'],
+    author: 'Chris Lane',
+  },
+  {
+    id: 'tip-902',
+    headline: 'Build momentum with wins',
+    summary: 'Stack a few small completions to reset confidence.',
+    topic: 'mindset',
+    readMinutes: 3,
+    tags: ['momentum', 'confidence'],
+    author: 'Taylor Brooks',
+  },
 ];
 
-const tips: Record<string, MentorTip> = seedTips.reduce(
-  (acc, tip) => {
-    acc[tip.id] = tip;
-    return acc;
-  },
-  {} as Record<string, MentorTip>,
-);
+const tips: Record<string, MentorTip> = seedTips.reduce((acc, tip) => {
+  acc[tip.id] = tip;
+  return acc;
+}, {} as Record<string, MentorTip>);
 
 export const db = {
   tips,
