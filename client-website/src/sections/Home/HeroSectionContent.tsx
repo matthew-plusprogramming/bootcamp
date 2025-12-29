@@ -6,7 +6,7 @@ const HeroSectionContent = (): JSX.Element => {
   return (
     <div className={styles.hero}>
       <p className={styles.kicker}>Live Bootcamp Worksheet</p>
-      <h1>Run the site. Read the tasks. Ship the fix.</h1>
+      <h1>Run the site. Read the tasks. Ship the update.</h1>
       <p className={styles.lede}>
         This repo is a hands-on worksheet. Each task points you to the code,
         and every save updates the UI.
