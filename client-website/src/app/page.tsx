@@ -2,6 +2,7 @@ import type { JSX } from 'react';
 
 import SiteFooter from '@/app/components/SiteFooter';
 import SiteHeader from '@/app/components/SiteHeader';
+import { SectionDivider } from '@/app/components/SectionDivider';
 import { bootcampTasks } from '@/data/bootcampTasks';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
 import { MentorTipsSection } from '@/sections/Home/MentorTipsSection';
@@ -21,6 +22,8 @@ const Home = (): JSX.Element => {
         </section>
 
         <StartLoopSection />
+
+        <SectionDivider />
 
         <MentorTipsSection />
 
