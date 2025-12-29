@@ -24,6 +24,10 @@ const TaskBoardSection = ({ tasks }: TaskBoardSectionProps): JSX.Element => {
           Read the goal, open the file, and make a small change. The UI updates
           as soon as you save in VSCode.
         </p>
+        <p>
+          Total Tasks:{' '}
+          {/* TODO: render task count (e.g. tasks.length) */}
+        </p>
       </div>
       <div className={styles.taskList}>
         {tasks.map((task) => {
