@@ -23,6 +23,7 @@ const HeroSectionContent = (): JSX.Element => {
 
       <div className={styles.badges}>
         <span>Read the codebase</span>
+        <span>Collaborate with Git</span>
         <span>Edit + refresh</span>
         <span>Express + Next</span>
       </div>
