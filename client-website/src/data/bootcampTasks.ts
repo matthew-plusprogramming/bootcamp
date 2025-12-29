@@ -29,30 +29,33 @@ export const bootcampTasks: BootcampTask[] = [
       label: 'View next task',
       href: '#task2',
     },
+    hint: 'Hint: In `page.tsx` around lines 68-71 the card id is `task.id` (ex: `task-2`), but in `bootcampTasks.ts` the `href` for task 1 is `#task2`.',
   },
   {
     id: 'task-2',
     order: 2,
     title: 'Extract a TaskCard component',
     badges: ['Components'],
-    goal: 'Move each task section into a reusable component with props.',
-    expected: 'The task board looks the same, but the markup lives in one component.',
+    goal: 'Move each task section into a reusable component with props, and add a "Next task" button to every card.',
+    expected: 'The task board looks the same, the markup lives in one component, and every card includes a Next task button.',
     lookIn: [
       'client-website/src/app/page.tsx',
       'client-website/src/app/components/TaskCard.tsx',
     ],
     completion: 'manual',
+    hint: 'Hint: The full card markup lives in `page.tsx` lines 67-135; move it into `TaskCard.tsx`, and place the new Next task link near the existing action link area (around lines 126-129).',
   },
   {
     id: 'task-3',
     order: 3,
     title: 'Add a "Show hint" toggle',
     badges: ['State'],
-    goal: 'Add a button to show and hide the hint content inside each task.',
-    expected: 'The hint only appears when toggled.',
+    goal: 'Add a button on each card to show and hide the hint content.',
+    expected:
+      'Each card has a Hint button; hints are hidden by default and appear only when toggled.',
     lookIn: ['client-website/src/app/components/TaskCard.tsx'],
     completion: 'manual',
-    hint: 'Hint: This note should be hidden until the toggle is clicked.',
+    hint: 'Hint: The hint block currently renders in `page.tsx` around lines 131-132; move it into `TaskCard.tsx` and toggle it with local state.',
   },
   {
     id: 'task-4',
@@ -63,6 +66,7 @@ export const bootcampTasks: BootcampTask[] = [
     expected: 'Sections render from data with stable keys.',
     lookIn: ['client-website/src/app/page.tsx'],
     completion: 'manual',
+    hint: 'Hint: The `bootcampTasks.map` loop is in `page.tsx` lines 59-137; if you are starting from static sections, replace them with a map and keep `task.id` as the key.',
   },
   {
     id: 'task-5',
@@ -73,6 +77,7 @@ export const bootcampTasks: BootcampTask[] = [
     expected: 'The empty state appears only when the array is empty.',
     lookIn: ['client-website/src/app/page.tsx'],
     completion: 'manual',
+    hint: 'Hint: Add a conditional near `page.tsx` lines 58-138 to render a fallback when `bootcampTasks.length === 0` before the map.',
   },
   {
     id: 'task-6',
@@ -86,6 +91,7 @@ export const bootcampTasks: BootcampTask[] = [
       'node-server/src/index.ts',
     ],
     completion: 'manual',
+    hint: 'Hint: The fetch URL is built at `LiveExercises.tsx` line 33; compare it to the Express route at `node-server/src/index.ts` line 78.',
   },
   {
     id: 'task-7',
@@ -96,6 +102,7 @@ export const bootcampTasks: BootcampTask[] = [
     expected: 'Loading text appears first and a clear error shows on failure.',
     lookIn: ['client-website/src/app/components/LiveExercises.tsx'],
     completion: 'manual',
+    hint: 'Hint: The loading and error UI live in the early returns in `LiveExercises.tsx` lines 70-83.',
   },
   {
     id: 'task-8',
@@ -106,6 +113,7 @@ export const bootcampTasks: BootcampTask[] = [
     expected: 'Unknown IDs return 404; valid IDs return JSON.',
     lookIn: ['node-server/src/index.ts'],
     completion: 'manual',
+    hint: 'Hint: The GET handler is in `node-server/src/index.ts` lines 82-88; make sure it returns `res.status(404)` when `getExerciseById` is falsy.',
   },
   {
     id: 'task-9',
@@ -119,6 +127,7 @@ export const bootcampTasks: BootcampTask[] = [
       'node-server/src/services/exercises.ts',
     ],
     completion: 'manual',
+    hint: "Hint: Add `app.get('/exercises/difficulty/:level')` near line 78 in `node-server/src/index.ts` and filter `listExercises()` by `difficulty` (see `Difficulty` in `node-server/src/data/store.ts` lines 1-9).",
   },
   {
     id: 'task-10',
@@ -132,6 +141,7 @@ export const bootcampTasks: BootcampTask[] = [
       'node-server/src/services/exercises.ts',
     ],
     completion: 'manual',
+    hint: 'Hint: `parseExerciseInput` in `node-server/src/index.ts` lines 51-56 builds the tags array; add a length check and return a 400 error when it is empty.',
   },
   {
     id: 'task-11',
@@ -142,6 +152,7 @@ export const bootcampTasks: BootcampTask[] = [
     expected: 'Middleware runs for every request.',
     lookIn: ['node-server/src/index.ts'],
     completion: 'manual',
+    hint: 'Hint: Drop a new `app.use` right after the existing `cors()`/`express.json()` calls in `node-server/src/index.ts` lines 70-72.',
   },
   {
     id: 'task-12',
@@ -153,6 +164,7 @@ export const bootcampTasks: BootcampTask[] = [
     lookIn: ['exercises/git/clean-merge/new-file.md'],
     completion: 'merge',
     completed: false,
+    hint: 'Hint: After merging, open `exercises/git/clean-merge/new-file.md` and check the first line to confirm the new file landed.',
   },
   {
     id: 'task-13',
@@ -164,6 +176,7 @@ export const bootcampTasks: BootcampTask[] = [
     lookIn: ['exercises/git/merge-clean-same-file.md'],
     completion: 'merge',
     completed: false,
+    hint: 'Hint: In `exercises/git/merge-clean-same-file.md`, find the `Section B` heading and edit the line directly beneath it before merging.',
   },
   {
     id: 'task-14',
@@ -175,6 +188,7 @@ export const bootcampTasks: BootcampTask[] = [
     lookIn: ['exercises/git/conflict-same-line.md'],
     completion: 'merge',
     completed: false,
+    hint: 'Hint: In `exercises/git/conflict-same-line.md`, update the `Status:` line near the top (line 3-ish) before merging.',
   },
   {
     id: 'task-15',
@@ -186,6 +200,7 @@ export const bootcampTasks: BootcampTask[] = [
     lookIn: ['exercises/git/semantic-list-order.md'],
     completion: 'merge',
     completed: false,
+    hint: 'Hint: In `exercises/git/semantic-list-order.md`, locate the bullet list and insert the line `- Avocado` right after the `- Apple` line.',
   },
   {
     id: 'task-16',
@@ -197,6 +212,7 @@ export const bootcampTasks: BootcampTask[] = [
     lookIn: ['exercises/git/delete-vs-edit.md'],
     completion: 'merge',
     completed: false,
+    hint: 'Hint: In `exercises/git/delete-vs-edit.md`, make a small edit on the first paragraph line so you can spot your change during the modify/delete resolution.',
   },
   {
     id: 'task-17',
@@ -211,5 +227,6 @@ export const bootcampTasks: BootcampTask[] = [
     ],
     completion: 'merge',
     completed: false,
+    hint: 'Hint: Update the first heading line in `exercises/git/rename-vs-edit.md` before merging; after the merge, check `exercises/git/rename-target.md` for your updated title.',
   },
 ];
