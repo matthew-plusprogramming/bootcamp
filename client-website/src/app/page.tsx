@@ -4,7 +4,7 @@ import SiteFooter from '@/app/components/SiteFooter';
 import SiteHeader from '@/app/components/SiteHeader';
 import { bootcampTasks } from '@/data/bootcampTasks';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
-import { MentorTipsSection } from '@/sections/Home/MentorTipsSection';
+import { MentorTipsPreviewSection } from '@/sections/Home/MentorTipsPreviewSection';
 import { StartLoopSection } from '@/sections/Home/StartLoopSection';
 import { TaskBoardSection } from '@/sections/Home/TaskBoardSection';
 
@@ -22,7 +22,7 @@ const Home = (): JSX.Element => {
 
         <StartLoopSection />
 
-        <MentorTipsSection />
+        <MentorTipsPreviewSection />
 
         <TaskBoardSection tasks={bootcampTasks} />
       </main>
