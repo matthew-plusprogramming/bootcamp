@@ -1,8 +1,9 @@
 import type { JSX } from 'react';
 
-import { bootcampTasks } from '@/data/bootcampTasks';
 import SiteFooter from '@/app/components/SiteFooter';
 import SiteHeader from '@/app/components/SiteHeader';
+import { TaskHintToggle } from '@/app/components/TaskHintToggle';
+import { bootcampTasks } from '@/data/bootcampTasks';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
 
 import styles from './page.module.scss';
@@ -120,7 +121,10 @@ const Home = (): JSX.Element => {
                       </a>
                     ) : null}
                     {task.hint ? (
-                      <div className={styles.taskHint}>{task.hint}</div>
+                      <TaskHintToggle
+                        hint={task.hint}
+                        hintId={`${task.id}-hint`}
+                      />
                     ) : null}
                   </div>
                 </article>

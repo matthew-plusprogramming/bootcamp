@@ -48,14 +48,17 @@ export const bootcampTasks: BootcampTask[] = [
   {
     id: 'task-3',
     order: 3,
-    title: 'Add a "Show hint" toggle',
+    title: 'Toggle the "Look in" file list',
     badges: ['State'],
-    goal: 'Add a button on each card to show and hide the hint content.',
+    goal: 'Hide the "Look in" file paths by default and add a button to reveal them.',
     expected:
-      'Each card has a Hint button; hints are hidden by default and appear only when toggled.',
-    lookIn: ['client-website/src/app/components/TaskCard.tsx'],
+      'Each card can show or hide the file list without a page refresh.',
+    lookIn: [
+      'client-website/src/app/page.tsx',
+      'client-website/src/app/components/TaskHintToggle.tsx',
+    ],
     completion: 'manual',
-    hint: 'Hint: The hint block currently renders in `page.tsx` around lines 131-132; move it into `TaskCard.tsx` and toggle it with local state.',
+    hint: 'Hint: The "Look in" list item is in `page.tsx` around lines 113-120; mirror the toggle pattern in `TaskHintToggle.tsx` to manage local state.',
   },
   {
     id: 'task-4',
