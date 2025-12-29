@@ -59,7 +59,7 @@ const Home = (): JSX.Element => {
             <h2>Task board</h2>
             <p>
               Read the goal, open the file, and make a small change. The UI
-              updates as soon as you save.
+              updates as soon as you save in VSCode.
             </p>
           </div>
           <div className={styles.taskList}>
