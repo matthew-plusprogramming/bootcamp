@@ -357,6 +357,61 @@
   gap: 1.5rem;
 }
 
+.serverStatus {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-line);
+  box-shadow: 0 12px 24px -24px rgb(24 20 16 / 0.35);
+  font-size: 0.85rem;
+}
+
+.serverStatusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg-line);
+  box-shadow: 0 0 0 4px rgb(31 27 22 / 0.08);
+}
+
+.serverStatusLabel {
+  color: var(--bg-muted);
+  font-weight: 500;
+}
+
+.serverStatusValue {
+  font-weight: 600;
+  color: var(--bg-ink);
+}
+
+.serverStatus[data-status='online'] .serverStatusDot {
+  background: var(--sea);
+  box-shadow: 0 0 0 4px rgb(27 107 92 / 0.2);
+}
+
+.serverStatus[data-status='online'] .serverStatusValue {
+  color: var(--sea);
+}
+
+.serverStatus[data-status='offline'] .serverStatusDot {
+  background: var(--accent-deep);
+  box-shadow: 0 0 0 4px rgb(214 83 27 / 0.2);
+}
+
+.serverStatus[data-status='offline'] .serverStatusValue {
+  color: var(--accent-deep);
+}
+
+.serverStatus[data-status='checking'] .serverStatusDot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgb(255 122 48 / 0.2);
+  animation: pulse 1.4s ease infinite;
+}
+
 .preview {
   display: flex;
   flex-direction: column;
@@ -434,5 +489,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
   }
 }

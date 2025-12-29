@@ -2,6 +2,7 @@ import type { JSX } from 'react';
 
 import SiteFooter from '@/app/components/SiteFooter';
 import SiteHeader from '@/app/components/SiteHeader';
+import { ServerStatusIndicator } from '@/app/components/ServerStatusIndicator';
 import { TaskHintToggle } from '@/app/components/TaskHintToggle';
 import { LiveTips } from '@/app/components/LiveTips';
 import { bootcampTasks } from '@/data/bootcampTasks';
@@ -24,6 +25,7 @@ const Home = (): JSX.Element => {
             <h2>Start the loop</h2>
             <p>Small steps. Fast feedback. Repeat.</p>
           </div>
+          <ServerStatusIndicator />
           <ol className={styles.steps}>
             <li>
               <strong>Run the servers.</strong> Start the API, then the client
