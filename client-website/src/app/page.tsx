@@ -1,25 +1,16 @@
 import type { JSX } from 'react';
 
+import { bootcampTasks } from '@/data/bootcampTasks';
+import SiteFooter from '@/app/components/SiteFooter';
+import SiteHeader from '@/app/components/SiteHeader';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
 
 import styles from './page.module.scss';
-import { bootcampTasks } from '@/data/bootcampTasks';
 
 const Home = (): JSX.Element => {
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.logo}>
-          <span className={styles.logoMark} aria-hidden="true" />
-          Veggie Rescue Bootcamp
-        </div>
-        <nav className={styles.nav}>
-          <a href="#tasks">Task board</a>
-          <a className={styles.navCta} href="#start">
-            Start here
-          </a>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main className={styles.main}>
         <section className={styles.hero}>
@@ -139,10 +130,7 @@ const Home = (): JSX.Element => {
         </section>
       </main>
 
-      <footer className={styles.footer}>
-        <p>Built for beginner developers and mentors.</p>
-        <p>Each task points to a real file so edits show up immediately.</p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
