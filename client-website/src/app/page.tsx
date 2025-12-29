@@ -3,6 +3,7 @@ import type { JSX } from 'react';
 import SiteFooter from '@/app/components/SiteFooter';
 import SiteHeader from '@/app/components/SiteHeader';
 import { TaskHintToggle } from '@/app/components/TaskHintToggle';
+import { LiveTips } from '@/app/components/LiveTips';
 import { bootcampTasks } from '@/data/bootcampTasks';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
 
@@ -40,6 +41,17 @@ const Home = (): JSX.Element => {
           <a className={styles.taskAction} href="#tASks">
             Jump to task board
           </a>
+        </section>
+
+        <section className={styles.preview} id="tips">
+          <div className={styles.sectionHeading}>
+            <h2>Mentor tips</h2>
+            <p>
+              Preview tips pulled from the API. Start the node-server to see
+              seeded data.
+            </p>
+          </div>
+          <LiveTips />
         </section>
 
         <section className={styles.tasks} id="tasks">

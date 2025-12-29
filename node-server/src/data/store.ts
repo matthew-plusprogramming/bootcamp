@@ -1,58 +1,62 @@
-export type Difficulty = 'intro' | 'practice' | 'stretch';
+export type TipTopic = 'mindset' | 'workflow' | 'craft';
 
-export type Exercise = {
+export type MentorTip = {
   id: string;
-  title: string;
+  headline: string;
   summary: string;
-  difficulty: Difficulty;
-  estMinutes: number;
+  topic: TipTopic;
+  readMinutes: number;
   tags: string[];
+  author: string;
 };
 
-const seedExercises: Exercise[] = [
+const seedTips: MentorTip[] = [
   {
-    id: 'ex-101',
-    title: 'Branch and Merge Warmup',
-    summary: 'Create a feature branch, make a small change, and merge it back.',
-    difficulty: 'intro',
-    estMinutes: 20,
-    tags: ['git', 'branches'],
+    id: 'tip-101',
+    headline: 'Ship the smallest slice',
+    summary: 'Deliver a thin vertical slice so feedback arrives before polish.',
+    topic: 'workflow',
+    readMinutes: 4,
+    tags: ['shipping', 'feedback'],
+    author: 'Maya Chen',
   },
   {
-    id: 'ex-204',
-    title: 'Fix the CSS Button Bug',
-    summary: 'Track down a broken style and make the button readable again.',
-    difficulty: 'practice',
-    estMinutes: 30,
-    tags: ['frontend', 'css'],
+    id: 'tip-205',
+    headline: 'Name the intent',
+    summary: 'Write commit messages that explain why the change exists.',
+    topic: 'craft',
+    readMinutes: 5,
+    tags: ['git', 'clarity'],
+    author: 'Ari Patel',
   },
   {
-    id: 'ex-310',
-    title: 'Add a New API Route',
-    summary: 'Create a new endpoint that reuses the existing service helpers.',
-    difficulty: 'stretch',
-    estMinutes: 40,
-    tags: ['backend', 'express'],
+    id: 'tip-309',
+    headline: 'Normalize the wobble',
+    summary: 'Expect a dip after learning; keep iterations short and visible.',
+    topic: 'mindset',
+    readMinutes: 3,
+    tags: ['mindset', 'consistency'],
+    author: 'Leila Stone',
   },
 ];
 
-const exercises: Record<string, Exercise> = seedExercises.reduce(
-  (acc, exercise) => {
-    acc[exercise.id] = exercise;
+const tips: Record<string, MentorTip> = seedTips.reduce(
+  (acc, tip) => {
+    acc[tip.id] = tip;
     return acc;
   },
-  {} as Record<string, Exercise>,
+  {} as Record<string, MentorTip>,
 );
 
 export const db = {
-  exercises,
+  tips,
 };
 
-export const resetExercises = (): void => {
-  Object.keys(exercises).forEach((key) => delete exercises[key]);
-  seedExercises.forEach((exercise) => {
-    exercises[exercise.id] = exercise;
+export const resetTips = (): void => {
+  Object.keys(tips).forEach((key) => delete tips[key]);
+  seedTips.forEach((tip) => {
+    tips[tip.id] = tip;
   });
 };
 
-export { seedExercises };
+export { seedTips };

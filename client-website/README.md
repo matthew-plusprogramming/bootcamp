@@ -1,7 +1,7 @@
 # client-website
 
 Next.js (App Router) landing page for the bootcamp. The page explains the
-learning flow and previews seeded exercises from the local API.
+learning flow and previews seeded mentor tips from the local API.
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ The site runs on `http://localhost:3000` by default.
 
 ## API Connection
 
-The "Live API preview" section fetches from the Express server. Set
+The optional LiveTips component fetches from the Express server. Set
 `NEXT_PUBLIC_API_URL` if your API runs somewhere else.
 
 Example:

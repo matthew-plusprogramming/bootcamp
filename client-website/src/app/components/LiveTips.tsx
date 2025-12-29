@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from 'react';
 
-import styles from './LiveExercises.module.scss';
+import styles from './LiveTips.module.scss';
 
-type Exercise = {
+type MentorTip = {
   id: string;
-  title: string;
+  headline: string;
   summary: string;
-  difficulty: string;
-  estMinutes: number;
+  topic: string;
+  readMinutes: number;
   tags: string[];
+  author: string;
 };
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -20,17 +21,17 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
 const toTitleCase = (value: string): string =>
   value ? value[0].toUpperCase() + value.slice(1) : value;
 
-const LiveExercises = (): JSX.Element => {
+const LiveTips = (): JSX.Element => {
   const [state, setState] = useState<LoadState>('loading');
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [tips, setTips] = useState<MentorTip[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    const loadExercises = async (): Promise<void> => {
+    const loadTips = async (): Promise<void> => {
       try {
-        const response = await fetch(`${API_URL}/exercises`, {
+        const response = await fetch(`${API_URL}/tips`, {
           signal: controller.signal,
         });
         if (!response.ok) {
@@ -43,24 +44,24 @@ const LiveExercises = (): JSX.Element => {
         }
 
         const normalized = data.filter(
-          (item): item is Exercise =>
+          (item): item is MentorTip =>
             typeof item === 'object' && item !== null && 'id' in item,
         );
 
-        setExercises(normalized);
+        setTips(normalized);
         setState('ready');
       } catch (error) {
         if (error instanceof DOMException && error.name === 'AbortError') {
           return;
         }
         setErrorMessage(
-          'Could not reach the API. Start the node-server to see seeded data.',
+          'Could not reach the API. Start the node-server to see seeded tips.',
         );
         setState('error');
       }
     };
 
-    loadExercises();
+    loadTips();
 
     return () => {
       controller.abort();
@@ -68,7 +69,7 @@ const LiveExercises = (): JSX.Element => {
   }, []);
 
   if (state === 'loading') {
-    return <p className={styles.status}>Loading tasks from the API...</p>;
+    return <p className={styles.status}>Loading mentor tips from the API...</p>;
   }
 
   if (state === 'error') {
@@ -82,29 +83,28 @@ const LiveExercises = (): JSX.Element => {
     );
   }
 
-  if (exercises.length === 0) {
+  if (tips.length === 0) {
     return (
       <p className={styles.status}>
-        No tasks yet. Add one with a POST to <code>/exercises</code>.
+        No tips yet. Add one with a POST to <code>/tips</code>.
       </p>
     );
   }
 
   return (
     <div className={styles.grid}>
-      {exercises.map((exercise) => (
-        <article className={styles.card} key={exercise.id}>
+      {tips.map((tip) => (
+        <article className={styles.card} key={tip.id}>
           <div className={styles.cardHeader}>
-            <span className={styles.difficulty}>
-              {toTitleCase(exercise.difficulty)}
-            </span>
-            <span className={styles.time}>{exercise.estMinutes} min</span>
+            <span className={styles.topic}>{toTitleCase(tip.topic)}</span>
+            <span className={styles.time}>{tip.readMinutes} min</span>
           </div>
-          <h3>{exercise.title}</h3>
-          <p>{exercise.summary}</p>
+          <h3>{tip.headline}</h3>
+          <p>{tip.summary}</p>
+          <p className={styles.author}>By {tip.author}</p>
           <div className={styles.tags}>
-            {exercise.tags?.map((tag) => (
-              <span key={`${exercise.id}-${tag}`}>{tag}</span>
+            {tip.tags?.map((tag) => (
+              <span key={`${tip.id}-${tag}`}>{tag}</span>
             ))}
           </div>
         </article>
@@ -113,4 +113,4 @@ const LiveExercises = (): JSX.Element => {
   );
 };
 
-export { LiveExercises };
+export { LiveTips };
