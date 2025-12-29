@@ -5,7 +5,7 @@ import styles from '../page.module.scss';
 const SiteFooter = (): JSX.Element => {
   return (
     <footer className={styles.footer}>
-      <p>Built for beginner developers and mentors.</p>
+      <p>Built for new developers and mentors learning together.</p>
       <p>Each task points to a real file so edits show up immediately.</p>
     </footer>
   );
