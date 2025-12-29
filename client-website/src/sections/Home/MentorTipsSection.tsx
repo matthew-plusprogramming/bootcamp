@@ -10,8 +10,7 @@ const MentorTipsSection = (): JSX.Element => {
       <div className={styles.sectionHeading}>
         <h2>Mentor tips</h2>
         <p>
-          Preview tips pulled from the API. Start the node-server to see seeded
-          data.
+          Preview tips pulled from the API. Start the node-server to see seeded data. (note this will not work until you do task 6)
         </p>
       </div>
       <LiveTips />
