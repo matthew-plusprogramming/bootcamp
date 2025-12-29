@@ -1,7 +1,5 @@
 import type { JSX } from 'react';
 
-import { ServerStatusIndicator } from '@/app/components/ServerStatusIndicator';
-
 import styles from '@/app/page.module.scss';
 
 const StartLoopSection = (): JSX.Element => {
@@ -11,7 +9,6 @@ const StartLoopSection = (): JSX.Element => {
         <h2>Start the loop</h2>
         <p>Small steps. Fast feedback. Repeat.</p>
       </div>
-      <ServerStatusIndicator />
       <ol className={styles.steps}>
         <li>
           <strong>Run the servers.</strong> Start the API, then the client app.
