@@ -2,24 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
+import { MentorTipCard, type MentorTip } from './MentorTipCard';
 import styles from './LiveTips.module.scss';
-
-type MentorTip = {
-  id: string;
-  headline: string;
-  summary: string;
-  topic: string;
-  readMinutes: number;
-  tags: string[];
-  author: string;
-};
 
 type LoadState = 'loading' | 'ready' | 'error';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
-
-const toTitleCase = (value: string): string =>
-  value ? value[0].toUpperCase() + value.slice(1) : value;
 
 const LiveTips = (): JSX.Element => {
   const [state, setState] = useState<LoadState>('loading');
@@ -92,20 +80,7 @@ const LiveTips = (): JSX.Element => {
   return (
     <div className={styles.grid}>
       {tips.map((tip) => (
-        <article className={styles.card} key={tip.id}>
-          <div className={styles.cardHeader}>
-            <span className={styles.topic}>{toTitleCase(tip.topic)}</span>
-            <span className={styles.time}>{tip.readMinutes} min</span>
-          </div>
-          <h3>{tip.headline}</h3>
-          <p>{tip.summary}</p>
-          <p className={styles.author}>By {tip.author}</p>
-          <div className={styles.tags}>
-            {tip.tags?.map((tag) => (
-              <span key={`${tip.id}-${tag}`}>{tag}</span>
-            ))}
-          </div>
-        </article>
+        <MentorTipCard key={tip.id} tip={tip} />
       ))}
     </div>
   );

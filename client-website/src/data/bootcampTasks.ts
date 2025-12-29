@@ -23,9 +23,9 @@ export const bootcampTasks: BootcampTask[] = [
     badges: ['Bugfix', 'Start here'],
     goal: 'Make the "Jump to task board" button in Start the loop scroll to the Task board section.',
     expected: 'Clicking it jumps to the Task board section.',
-    lookIn: ['client-website/src/app/page.tsx'],
+    lookIn: ['client-website/src/sections/Home/StartLoopSection.tsx'],
     completion: 'manual',
-    hint: 'Hint: In `page.tsx` inside the Start the loop section, the button points to `#tASks`, but the Task board section uses the id `tasks`.',
+    hint: 'Hint: In `StartLoopSection.tsx`, the button points to `#tASks`, but the Task board section uses the id `tasks`.',
   },
   {
     id: 'task-2',
@@ -36,11 +36,11 @@ export const bootcampTasks: BootcampTask[] = [
     expected:
       'The task board looks the same, the markup lives in one component, and every card includes a Next task button.',
     lookIn: [
-      'client-website/src/app/page.tsx',
+      'client-website/src/sections/Home/TaskBoardSection.tsx',
       'client-website/src/app/components/TaskCard.tsx',
     ],
     completion: 'manual',
-    hint: 'Hint: The full card markup lives in `page.tsx` lines 67-135; move it into `TaskCard.tsx`, and place the new Next task link near the existing action link area (around lines 126-129).',
+    hint: 'Hint: The full card markup lives in `TaskBoardSection.tsx` inside the tasks map; move it into `TaskCard.tsx`, and place the new Next task link near the existing action link area.',
   },
   {
     id: 'task-3',
@@ -51,11 +51,11 @@ export const bootcampTasks: BootcampTask[] = [
     expected:
       'Each card can show or hide the file list without a page refresh.',
     lookIn: [
-      'client-website/src/app/page.tsx',
+      'client-website/src/sections/Home/TaskBoardSection.tsx',
       'client-website/src/app/components/TaskHintToggle.tsx',
     ],
     completion: 'manual',
-    hint: 'Hint: The "Look in" list item is in `page.tsx` around lines 113-120; mirror the toggle pattern in `TaskHintToggle.tsx` to manage local state.',
+    hint: 'Hint: The "Look in" list item is in `TaskBoardSection.tsx`; mirror the toggle pattern in `TaskHintToggle.tsx` to manage local state.',
   },
   {
     id: 'task-4',
@@ -64,9 +64,9 @@ export const bootcampTasks: BootcampTask[] = [
     badges: ['Data flow', 'UI'],
     goal: 'Display how many tasks are in the list under the Task board heading.',
     expected: 'The task count updates automatically when the array changes.',
-    lookIn: ['client-website/src/app/page.tsx'],
+    lookIn: ['client-website/src/sections/Home/TaskBoardSection.tsx'],
     completion: 'manual',
-    hint: 'Hint: In `page.tsx` inside the Task board `sectionHeading`, render something like `${bootcampTasks.length} tasks` beneath the title.',
+    hint: 'Hint: In `TaskBoardSection.tsx` inside the Task board heading, render something like `${tasks.length} tasks` beneath the title.',
   },
   {
     id: 'task-5',
@@ -75,9 +75,9 @@ export const bootcampTasks: BootcampTask[] = [
     badges: ['Conditional UI'],
     goal: 'Show a friendly message when there are no tasks.',
     expected: 'The empty state appears only when the array is empty.',
-    lookIn: ['client-website/src/app/page.tsx'],
+    lookIn: ['client-website/src/sections/Home/TaskBoardSection.tsx'],
     completion: 'manual',
-    hint: 'Hint: Add a conditional near `page.tsx` lines 58-138 to render a fallback when `bootcampTasks.length === 0` before the map.',
+    hint: 'Hint: Add a conditional in `TaskBoardSection.tsx` to render a fallback when `tasks.length === 0` before the map.',
   },
   {
     id: 'task-6',
@@ -89,9 +89,10 @@ export const bootcampTasks: BootcampTask[] = [
     lookIn: [
       'client-website/src/app/components/LiveTips.tsx',
       'node-server/src/index.ts',
+      'node-server/src/routes/tipsRoutes.ts',
     ],
     completion: 'manual',
-    hint: 'Hint: `LiveTips.tsx` requests `/api/tips`, but the list route in `node-server/src/index.ts` is `/tips`.',
+    hint: "Hint: `LiveTips.tsx` requests `/api/tips`, but the list route is mounted at `/tips` (see `app.use('/tips', tipsRoutes)` and `tipsRoutes.get('/')`).",
   },
   {
     id: 'task-7',
@@ -111,9 +112,9 @@ export const bootcampTasks: BootcampTask[] = [
     badges: ['Express', 'Bugfix'],
     goal: 'Return 404 for unknown IDs and JSON for valid IDs.',
     expected: 'Unknown IDs return 404; valid IDs return JSON.',
-    lookIn: ['node-server/src/index.ts'],
+    lookIn: ['node-server/src/routes/tipsRoutes.ts'],
     completion: 'manual',
-    hint: 'Hint: The GET handler is in `node-server/src/index.ts`; make sure it returns `res.status(404)` when `getTipById` is falsy.',
+    hint: 'Hint: The GET handler is in `node-server/src/routes/tipsRoutes.ts`; make sure it returns `res.status(404)` when `getTipById` is falsy.',
   },
   {
     id: 'task-9',
@@ -123,11 +124,11 @@ export const bootcampTasks: BootcampTask[] = [
     goal: 'Add /tips/topic/:topic to filter by topic.',
     expected: 'Endpoint returns the filtered list with a 200 status.',
     lookIn: [
-      'node-server/src/index.ts',
+      'node-server/src/routes/tipsRoutes.ts',
       'node-server/src/services/tips.ts',
     ],
     completion: 'manual',
-    hint: "Hint: Add `app.get('/tips/topic/:topic')` near the list route in `node-server/src/index.ts` and filter `listTips()` by `topic` (see `TipTopic` in `node-server/src/data/store.ts`).",
+    hint: "Hint: Add `tipsRoutes.get('/topic/:topic')` near the list route in `node-server/src/routes/tipsRoutes.ts` and filter `listTips()` by `topic` (see `TipTopic` in `node-server/src/data/store.ts`).",
   },
   {
     id: 'task-10',
@@ -137,11 +138,11 @@ export const bootcampTasks: BootcampTask[] = [
     goal: 'Require at least one tag in POST /tips.',
     expected: 'Invalid input returns 400; valid input creates a tip.',
     lookIn: [
-      'node-server/src/index.ts',
+      'node-server/src/routes/tipsRoutes.ts',
       'node-server/src/services/tips.ts',
     ],
     completion: 'manual',
-    hint: 'Hint: `parseTipInput` in `node-server/src/index.ts` builds the tags array; add a length check and return a 400 error when it is empty.',
+    hint: 'Hint: `parseTipInput` in `node-server/src/routes/tipsRoutes.ts` builds the tags array; add a length check and return a 400 error when it is empty.',
   },
   {
     id: 'task-11',
@@ -152,7 +153,7 @@ export const bootcampTasks: BootcampTask[] = [
     expected: 'Middleware runs for every request.',
     lookIn: ['node-server/src/index.ts'],
     completion: 'manual',
-    hint: 'Hint: Drop a new `app.use` right after the existing `cors()`/`express.json()` calls in `node-server/src/index.ts` lines 70-72.',
+    hint: 'Hint: Drop a new `app.use` right after the existing `cors()`/`express.json()` calls in `node-server/src/index.ts`.',
   },
   {
     id: 'task-12',
