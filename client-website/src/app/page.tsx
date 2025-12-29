@@ -1,3 +1,5 @@
+'use client';
+
 import type { JSX } from 'react';
 
 import SiteFooter from '@/app/components/SiteFooter';
@@ -5,12 +7,95 @@ import SiteHeader from '@/app/components/SiteHeader';
 import { ServerStatusIndicator } from '@/app/components/ServerStatusIndicator';
 import { TaskHintToggle } from '@/app/components/TaskHintToggle';
 import { LiveTips } from '@/app/components/LiveTips';
-import { bootcampTasks } from '@/data/bootcampTasks';
+import { useLocalStorageState } from '@/app/hooks/useLocalStorageState';
+import { bootcampTasks, type BootcampTask } from '@/data/bootcampTasks';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
 
 import styles from './page.module.scss';
 
+const TASK_COMPLETION_STORAGE_KEY = 'bootcamp-task-completion';
+
+const isManualTask = (task: BootcampTask): boolean =>
+  (task.completion ?? 'manual') === 'manual';
+
+const MANUAL_TASK_IDS = new Set(
+  bootcampTasks.filter(isManualTask).map((task) => task.id),
+);
+
+const DEFAULT_TASK_COMPLETION = bootcampTasks.reduce<Record<string, boolean>>(
+  (acc, task) => {
+    if (isManualTask(task)) {
+      acc[task.id] = Boolean(task.completed);
+    }
+    return acc;
+  },
+  {},
+);
+
+const parseTaskCompletion = (value: string): Record<string, boolean> | null => {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(value);
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+
+    const normalized: Record<string, boolean> = {};
+
+    for (const [taskId, storedValue] of Object.entries(parsed)) {
+      if (!MANUAL_TASK_IDS.has(taskId) || typeof storedValue !== 'boolean') {
+        continue;
+      }
+      normalized[taskId] = storedValue;
+    }
+
+    return normalized;
+  } catch {
+    return null;
+  }
+};
+
+const mergeTaskCompletion = (
+  current: Record<string, boolean>,
+  stored: Record<string, boolean>,
+): Record<string, boolean> => ({
+  ...current,
+  ...stored,
+});
+
 const Home = (): JSX.Element => {
+  const [taskCompletion, setTaskCompletion] = useLocalStorageState(
+    TASK_COMPLETION_STORAGE_KEY,
+    DEFAULT_TASK_COMPLETION,
+    {
+      deserialize: parseTaskCompletion,
+      merge: mergeTaskCompletion,
+    },
+  );
+
+  const handleCompletionChange = (
+    taskId: string,
+    checked: boolean,
+  ): void => {
+    if (!MANUAL_TASK_IDS.has(taskId)) {
+      return;
+    }
+
+    setTaskCompletion((prev) => {
+      if (prev[taskId] === checked) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [taskId]: checked,
+      };
+    });
+  };
+
   return (
     <div className={styles.page}>
       <SiteHeader />
@@ -68,6 +153,9 @@ const Home = (): JSX.Element => {
             {bootcampTasks.map((task) => {
               const completionMode = task.completion ?? 'manual';
               const isMergeLocked = completionMode === 'merge';
+              const isCompleted = isMergeLocked
+                ? Boolean(task.completed)
+                : Boolean(taskCompletion[task.id]);
               const completeLabel = isMergeLocked
                 ? 'Complete via merge'
                 : 'Mark complete';
@@ -82,7 +170,10 @@ const Home = (): JSX.Element => {
                     className={styles.taskToggle}
                     type="checkbox"
                     id={`${task.id}-complete`}
-                    defaultChecked={Boolean(task.completed)}
+                    checked={isCompleted}
+                    onChange={(event) =>
+                      handleCompletionChange(task.id, event.target.checked)
+                    }
                     disabled={isMergeLocked}
                   />
                   <div className={styles.taskHeader}>
