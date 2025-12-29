@@ -7,16 +7,47 @@ last_reviewed: 2025-12-28
 ## Purpose
 - Give instructors a concrete setup plan for Git merge practice and the
   beginner React/Express exercises.
-- Keep tasks small, explicit, and easy to recover with Git.
+- Use the client website as the worksheet: instructions are on the page and
+  fixes update the UI in realtime.
 
 ## Assumptions and repo layout
 - Repo root has:
-  - `client-website` (React UI)
+  - `client-website` (Next UI)
   - `node-server` (Express API)
+- Key UI files:
+  - `client-website/src/app/page.tsx` (main layout + sections)
+  - `client-website/src/sections/Home/HeroSectionContent.tsx` (hero CTA buttons)
+  - `client-website/src/app/components/LiveExercises.tsx` (API-backed list)
+  - `client-website/src/app/page.module.scss`
+  - `client-website/src/sections/Home/HeroSectionContent.module.scss`
+  - `client-website/src/app/components/LiveExercises.module.scss`
+- Key API files:
+  - `node-server/src/index.ts` (routes + validation)
+  - `node-server/src/services/exercises.ts` (service helpers)
+  - `node-server/src/data/store.ts` (seeded exercises shown on the site)
 - Use a dedicated `exercises/` folder for Git practice fixtures so they do not
   affect the running apps.
 - If the client or server is simplified later, keep the task intent the same
   and only adjust file paths.
+
+## How tasks show up on the website
+- The client page is the worksheet. Each task appears on the page with a short
+  "Goal" and "Expected result" text.
+- Learners fix the code that controls the same UI element. The fix should be
+  obvious in the running site.
+- Use the "Practice" section in `client-website/src/app/page.tsx` for static
+  instructions.
+- Use the "Live API preview" section for API-backed tasks. It renders items
+  from `node-server/src/data/store.ts` via `LiveExercises`.
+- Example bug to stage: a "Next task" or "Start here" button uses the wrong
+  anchor, so clicking it does nothing. The UI instruction says what it should
+  do, and the fix is in `page.tsx` or `HeroSectionContent.tsx`.
+
+## Instructor local setup
+- Start API: run `npm run dev` in `node-server`.
+- Start UI: run `npm run dev` in `client-website`.
+- Update `node-server/src/data/store.ts` to seed the exact tasks you want
+  shown in the "Live API preview".
 
 ## Phase 0 - Git merge practice (instructor setup)
 
@@ -28,7 +59,7 @@ last_reviewed: 2025-12-28
 
 ### Base fixture files (create once on `main`)
 Create these files under `exercises/git/` and commit them on `main`. They are
-only used for merge practice.
+only used for merge practice and do not affect the running apps.
 
 `exercises/git/merge-clean-same-file.md`
 ```
@@ -120,71 +151,91 @@ commits instead of fast-forwards.
 
 ## Phase 1 - React fundamentals (no form handling)
 
-### Exercise 1: Fix a bug (props or rendering)
-- Setup: introduce a small bug in a visible component (for example, display
-  `undefined` because a prop is misnamed).
-- Learner task: fix the prop usage so the correct text renders.
-- Done when: UI renders the correct string and no runtime warnings appear.
+### Exercise 1: Fix a broken button or anchor
+- Setup: break a visible CTA so the UI does not navigate (example: the
+  "Start here" link points to the wrong section ID, or a "Next task" button is
+  missing its `href`).
+- Learner task: fix the anchor or handler so the button scrolls to the correct
+  section.
+- Where: `client-website/src/app/page.tsx` and
+  `client-website/src/sections/Home/HeroSectionContent.tsx`.
+- Done when: clicking the CTA moves to the intended section.
 
-### Exercise 2: Create a component and use it
-- Setup: provide repeated markup in a page or section.
-- Learner task: extract a `Card` (or similar) component with clear props and
-  replace repeated markup with the new component.
-- Done when: component is reused at least 3 times with different props.
+### Exercise 2: Create a component and reuse it
+- Setup: keep the repeated "Practice" cards in `page.tsx`.
+- Learner task: extract a `PracticeCard` (or similar) component and pass
+  `title` and `summary` props.
+- Where: `client-website/src/app/page.tsx` and a new
+  `client-website/src/app/components/PracticeCard.tsx` (or similar).
+- Done when: the component is reused at least 3 times with different props.
 
 ### Exercise 3: State + events
-- Setup: add a simple toggle or counter placeholder in the UI.
-- Learner task: add `useState` and a button click handler to update the value.
-- Done when: the UI updates immediately on click.
+- Setup: add a "Show hint" or "Show details" toggle inside each practice card.
+- Learner task: use `useState` to show or hide the extra copy on click.
+- Where: `client-website/src/app/page.tsx` or the extracted component file.
+- Done when: clicking the toggle updates the UI immediately.
 
 ## Phase 2 - React data flow
 
 ### Exercise 4: Render a dynamic list
-- Setup: provide an array of items (local data or fetched data).
-- Learner task: map over the array to render list items with stable keys.
-- Done when: list renders all items and handles empty arrays gracefully.
+- Setup: move the "Practice" cards into a local array in `page.tsx`.
+- Learner task: map over the array to render cards with stable keys.
+- Where: `client-website/src/app/page.tsx`.
+- Done when: all cards render and keys are stable.
 
 ### Exercise 5: Conditional UI
-- Setup: create an empty-state section and a populated-state section.
-- Learner task: show one or the other based on the data length.
-- Done when: toggling data between empty/populated shows the right UI.
+- Setup: add an empty-state message when there are no practice items.
+- Learner task: render the empty state only when the array length is zero.
+- Where: `client-website/src/app/page.tsx`.
+- Done when: empty state appears only when the list is empty.
 
 ### Exercise 6: Fetch data from the API
-- Setup: expose a simple GET endpoint on the API (example: `/exercises`).
-- Learner task: call the endpoint from the client and render results.
-- Done when: the list renders data returned by the API.
+- Setup: break the API preview on purpose (wrong path or base URL).
+- Learner task: fix the fetch so `LiveExercises` renders the seeded exercises.
+- Where: `client-website/src/app/components/LiveExercises.tsx` and
+  `node-server/src/index.ts` (GET `/exercises`).
+- Done when: cards render with titles, summaries, and tags.
 
 ### Exercise 7: Loading and error states
-- Setup: simulate slow requests or errors (delay in API, temporary error).
-- Learner task: show `Loading...` while awaiting, and a retry message on error.
-- Done when: loading and error states appear correctly.
+- Setup: remove or break the loading/error states in `LiveExercises`.
+- Learner task: restore the `loading`, `error`, and `ready` UI states.
+- Where: `client-website/src/app/components/LiveExercises.tsx`.
+- Done when: the UI shows a loading message and a clear error message when
+  the API is down.
 
 ## Phase 3 - Express fundamentals
 
 ### Exercise 8: Fix an endpoint bug
-- Setup: introduce a small bug in an existing endpoint (wrong status code,
-  missing field, or incorrect error handling).
-- Learner task: fix the response to match the expected shape and status.
-- Done when: endpoint returns correct JSON and status.
+- Setup: break `GET /exercises/:id` to return the wrong status or shape.
+- Learner task: fix 404 handling and response shape.
+- Where: `node-server/src/index.ts`.
+- Done when: unknown IDs return 404 and valid IDs return JSON.
 
 ### Exercise 9: Add a GET endpoint
-- Setup: identify a reusable service (example: `listExercises`).
-- Learner task: add a GET route that returns data from the service.
-- Done when: route returns a JSON array with 200 status.
+- Setup: define a new list endpoint such as `/exercises/difficulty/:level`.
+- Learner task: filter the list with `listExercises` and return JSON.
+- Where: `node-server/src/index.ts` and `node-server/src/services/exercises.ts`
+  if you add a helper.
+- Done when: endpoint returns a filtered list with 200 status.
 
 ### Exercise 10: Add a POST endpoint with validation
-- Setup: provide a validation helper or outline required fields.
-- Learner task: validate input, return 400 on error, 201 on success.
-- Done when: valid requests create data and invalid requests return errors.
+- Setup: extend input validation (example: require at least one tag).
+- Learner task: update `parseExerciseInput` and keep 400 on invalid input.
+- Where: `node-server/src/index.ts` and `node-server/src/services/exercises.ts`.
+- Done when: valid requests create an exercise and invalid requests return 400.
 
 ### Exercise 11: Add simple middleware
-- Setup: pick a basic middleware (logger, request timer, or guard).
-- Learner task: add middleware to the app and confirm it runs per request.
-- Done when: middleware behavior is visible (console log or response header).
+- Setup: pick a basic middleware (logger or response header).
+- Learner task: add middleware and confirm it runs per request.
+- Where: `node-server/src/index.ts`.
+- Done when: middleware output appears in logs or responses.
 
 ## Instructor checklist (summary)
 - [ ] Create `exercises/git/` fixture files on `main`.
 - [ ] Create scenario branches with the exact edits listed above.
 - [ ] Validate each merge scenario on a scratch branch.
+- [ ] Seed task text in `node-server/src/data/store.ts` and/or update the
+      "Practice" section in `client-website/src/app/page.tsx`.
+- [ ] Stage broken UI elements (for example, a CTA or "Next task" button).
 - [ ] Prepare Phase 1-3 exercise branches or instructions for each task.
 - [ ] Keep all tasks small and isolated to a single file or component.

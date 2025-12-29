@@ -68,7 +68,7 @@ const LiveExercises = (): JSX.Element => {
   }, []);
 
   if (state === 'loading') {
-    return <p className={styles.status}>Loading exercises from the API...</p>;
+    return <p className={styles.status}>Loading tasks from the API...</p>;
   }
 
   if (state === 'error') {
@@ -85,7 +85,7 @@ const LiveExercises = (): JSX.Element => {
   if (exercises.length === 0) {
     return (
       <p className={styles.status}>
-        No exercises yet. Add one with a POST to <code>/exercises</code>.
+        No tasks yet. Add one with a POST to <code>/exercises</code>.
       </p>
     );
   }

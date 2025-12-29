@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 
-import { LiveExercises } from '@/app/components/LiveExercises';
 import { HeroSectionContent } from '@/sections/Home/HeroSectionContent';
 
 import styles from './page.module.scss';
+import { bootcampTasks } from '@/data/bootcampTasks';
 
 const Home = (): JSX.Element => {
   return (
@@ -14,8 +14,7 @@ const Home = (): JSX.Element => {
           Veggie Rescue Bootcamp
         </div>
         <nav className={styles.nav}>
-          <a href="#practice">Practice</a>
-          <a href="#api">API Preview</a>
+          <a href="#tasks">Task board</a>
           <a className={styles.navCta} href="#start">
             Start here
           </a>
@@ -27,72 +26,122 @@ const Home = (): JSX.Element => {
           <HeroSectionContent />
         </section>
 
-        <section className={styles.practice} id="practice">
-          <div className={styles.sectionHeading}>
-            <h2>What you will practice</h2>
-            <p>
-              Each task is scoped to one skill so you can learn quickly without
-              getting lost.
-            </p>
-          </div>
-          <div className={styles.practiceGrid}>
-            <article className={styles.practiceCard}>
-              <h3>Git workflows</h3>
-              <p>
-                Branch, merge, and recover from conflicts with small, safe
-                changes.
-              </p>
-            </article>
-            <article className={styles.practiceCard}>
-              <h3>React components</h3>
-              <p>
-                Create and wire UI pieces with clear props, styles, and layout.
-              </p>
-            </article>
-            <article className={styles.practiceCard}>
-              <h3>Express endpoints</h3>
-              <p>
-                Add routes that reuse services and return clean, predictable
-                JSON.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className={styles.api} id="api">
-          <div className={styles.sectionHeading}>
-            <h2>Live API preview</h2>
-            <p>
-              The Express server seeds a few exercises on startup. Start the
-              API to see them here.
-            </p>
-          </div>
-          <LiveExercises />
-        </section>
-
         <section className={styles.start} id="start">
           <div className={styles.sectionHeading}>
-            <h2>Start in three steps</h2>
-            <p>Keep the loop short so you can iterate fast.</p>
+            <h2>Start the loop</h2>
+            <p>Small steps. Fast feedback. Repeat.</p>
           </div>
           <ol className={styles.steps}>
             <li>
-              <strong>Run the servers.</strong> Start the API, then the client.
+              <strong>Run the servers.</strong> Start the API, then the client
+              app.
             </li>
             <li>
-              <strong>Pick a task.</strong> Read the before/after goal and open
-              the relevant file.
+              <strong>Read a task.</strong> Skim the goal and jump into the file
+              it references.
             </li>
             <li>
-              <strong>Ship a small change.</strong> Commit, review, and repeat.
+              <strong>Make a tiny change.</strong> Save and confirm the UI
+              updates.
             </li>
           </ol>
+        </section>
+
+        <section className={styles.tasks} id="tasks">
+          <div className={styles.sectionHeading}>
+            <h2>Task board</h2>
+            <p>
+              Read the goal, open the file, and make a small change. The UI
+              updates as soon as you save.
+            </p>
+          </div>
+          <div className={styles.taskList}>
+            {bootcampTasks.map((task) => {
+              const completionMode = task.completion ?? 'manual';
+              const isMergeLocked = completionMode === 'merge';
+              const completeLabel = isMergeLocked
+                ? 'Complete via merge'
+                : 'Mark complete';
+              const doneLabel = isMergeLocked ? 'Merged' : 'Completed';
+
+              return (
+                <article
+                  className={styles.taskSection}
+                  id={task.id}
+                  key={task.id}
+                >
+                  <input
+                    className={styles.taskToggle}
+                    type="checkbox"
+                    id={`${task.id}-complete`}
+                    defaultChecked={Boolean(task.completed)}
+                    disabled={isMergeLocked}
+                  />
+                  <div className={styles.taskHeader}>
+                    <div className={styles.taskHeaderText}>
+                      <div className={styles.taskMeta}>
+                        <span className={styles.taskIndex}>
+                          Task {task.order}
+                        </span>
+                        {task.badges.map((badge, index) => (
+                          <span
+                            className={
+                              index === 0
+                                ? styles.taskBadge
+                                : styles.taskBadgeAlt
+                            }
+                            key={`${task.id}-${badge}`}
+                          >
+                            {badge}
+                          </span>
+                        ))}
+                      </div>
+                      <h3 className={styles.taskTitle}>{task.title}</h3>
+                    </div>
+                    <label
+                      className={styles.taskComplete}
+                      htmlFor={`${task.id}-complete`}
+                    >
+                      <span className={styles.taskCompleteLabel}>
+                        {completeLabel}
+                      </span>
+                      <span className={styles.taskCompleteDone}>
+                        {doneLabel}
+                      </span>
+                    </label>
+                  </div>
+                  <div className={styles.taskBody}>
+                    <ul className={styles.taskDetails}>
+                      <li>
+                        <strong>Goal:</strong> {task.goal}
+                      </li>
+                      <li>
+                        <strong>Expected:</strong> {task.expected}
+                      </li>
+                      <li>
+                        <strong>Look in:</strong>{' '}
+                        <code>{task.lookIn.join(', ')}</code>
+                      </li>
+                    </ul>
+                    {task.action ? (
+                      <a className={styles.taskAction} href={task.action.href}>
+                        {task.action.label}
+                      </a>
+                    ) : null}
+                    {task.hint ? (
+                      <div className={styles.taskHint}>{task.hint}</div>
+                    ) : null}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </section>
       </main>
 
       <footer className={styles.footer}>
         <p>Built for beginner developers and mentors.</p>
-        <p>Run `node-server` + `client-website` locally to get started.</p>
+        <p>Each task points to a real file so edits show up immediately.</p>
       </footer>
     </div>
   );
