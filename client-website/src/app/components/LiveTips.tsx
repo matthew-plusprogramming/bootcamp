@@ -31,7 +31,7 @@ const LiveTips = (): JSX.Element => {
 
     const loadTips = async (): Promise<void> => {
       try {
-        const response = await fetch(`${API_URL}/tips`, {
+        const response = await fetch(`${API_URL}/api/tips`, {
           signal: controller.signal,
         });
         if (!response.ok) {
@@ -54,9 +54,7 @@ const LiveTips = (): JSX.Element => {
         if (error instanceof DOMException && error.name === 'AbortError') {
           return;
         }
-        setErrorMessage(
-          'Could not reach the API. Start the node-server to see seeded tips.',
-        );
+        setErrorMessage('Could not reach the API. Something is wrong!.');
         setState('error');
       }
     };

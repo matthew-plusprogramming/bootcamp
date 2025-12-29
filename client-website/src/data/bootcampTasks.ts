@@ -91,7 +91,7 @@ export const bootcampTasks: BootcampTask[] = [
       'node-server/src/index.ts',
     ],
     completion: 'manual',
-    hint: 'Hint: The fetch URL is built in `LiveTips.tsx`; compare it to the Express route in `node-server/src/index.ts`.',
+    hint: 'Hint: `LiveTips.tsx` requests `/api/tips`, but the list route in `node-server/src/index.ts` is `/tips`.',
   },
   {
     id: 'task-7',
